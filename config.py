@@ -7,7 +7,9 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 DEBUG = True
 
 # Connect to the database
+SQLALCHEMY_DATABASE_URI =\
+    'postgresql://username:password@domain:port/database_name'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
-# TODO IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = '<Put your local database url>'
+# CSRF time to expire
+WTF_CSRF_TIME_LIMIT = 3600

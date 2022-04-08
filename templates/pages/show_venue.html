@@ -74,8 +74,40 @@
 		{% endfor %}
 	</div>
 </section>
+<div class="btn-group" role="group">
+	<a href="/venues/{{ venue.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a>
+	<a id="delete"><button class="btn btn-danger btn-lg">Delete</button></a>
+</div>
+<script type="text/javascript">
 
-<a href="/venues/{{ venue.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a>
+	const csrf_token = "{{ csrf_token() }}"
 
+	document.onreadystatechange = function () {
+		if (document.readyState === 'complete') {
+
+			const elem = document.getElementById("delete");
+
+			elem.onclick = function(e) {
+				e.preventDefault();
+
+				fetch("/venues/" + "{{ venue.id }}", {
+					method: 'DELETE',
+            		headers: {
+                		"Content-Type": "application/json",
+						"X-CSRFToken": csrf_token
+            		}
+				})
+				.then((res) => res.text())
+				.then((data) => {
+					console.log(data)
+					window.location.replace(data)
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+    		}
+		}
+	}
+	</script>
 {% endblock %}
 

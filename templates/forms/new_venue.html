@@ -1,9 +1,21 @@
 {% extends 'layouts/main.html' %}
 {% block title %}New Venue{% endblock %}
 {% block content %}
+
+  {% if form.errors %}
+  <div class="form-wrapper">
+    <ul>
+    {% for field, error in form.errors.items(): %}
+      <li class="list-group-item list-group-item-danger"><strong>{{ field }}</strong>:<br/> {{ ', '.join(error) }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
   <div class="form-wrapper">
     <form method="post" class="form" action="/venues/create">
       <h3 class="form-heading">List a new venue <a href="{{ url_for('index') }}" title="Back to homepage"><i class="fa fa-home pull-right"></i></a></h3>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
       <div class="form-group">
         <label for="name">Name</label>
         {{ form.name(class_ = 'form-control', autofocus = true) }}
